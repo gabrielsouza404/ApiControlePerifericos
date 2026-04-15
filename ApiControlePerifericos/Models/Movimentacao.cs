@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
 
 namespace ApiControlePerifericos.Models
 {
@@ -17,9 +16,7 @@ namespace ApiControlePerifericos.Models
         public int ProdutoId { get; set; }
         public int ColaboradorId { get; set; }
 
-        [JsonIgnore]
         public Produto? Produto { get; set; }
-        [JsonIgnore]
         public Colaborador? Colaborador { get; set; }
 
     }
