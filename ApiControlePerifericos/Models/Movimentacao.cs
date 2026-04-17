@@ -18,6 +18,6 @@ namespace ApiControlePerifericos.Models
 
         public Produto? Produto { get; set; }
         public Colaborador? Colaborador { get; set; }
-
+        public int MovimentacaoId { get; internal set; }
     }
 }

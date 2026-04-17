@@ -1,0 +1,105 @@
+Information: 14 - Now listening on: https://localhost:7081
+Information: 14 - Now listening on: http://localhost:5045
+Information: 0 - Application started. Press Ctrl+C to shut down.
+Information: 0 - Hosting environment: Development
+Information: 0 - Content root path: C:\Projetos\ControleHardwaresCoworking\WebApi\ApiControlePerifericos\ApiControlePerifericos
+Information: 14 - Now listening on: https://localhost:7081
+Information: 14 - Now listening on: http://localhost:5045
+Information: 0 - Application started. Press Ctrl+C to shut down.
+Information: 0 - Hosting environment: Development
+Information: 0 - Content root path: C:\Projetos\ControleHardwaresCoworking\WebApi\ApiControlePerifericos\ApiControlePerifericos
+Information: 14 - Now listening on: https://localhost:7081
+Information: 14 - Now listening on: http://localhost:5045
+Information: 0 - Application started. Press Ctrl+C to shut down.
+Information: 0 - Hosting environment: Development
+Information: 0 - Content root path: C:\Projetos\ControleHardwaresCoworking\WebApi\ApiControlePerifericos\ApiControlePerifericos
+Information: 20101 - Executed DbCommand (27ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT `c`.`ColaboradorId`, `c`.`Nome`
+FROM `Colaboradores` AS `c`
+Information: 14 - Now listening on: https://localhost:7081
+Information: 14 - Now listening on: http://localhost:5045
+Information: 0 - Application started. Press Ctrl+C to shut down.
+Information: 0 - Hosting environment: Development
+Information: 0 - Content root path: C:\Projetos\ControleHardwaresCoworking\WebApi\ApiControlePerifericos\ApiControlePerifericos
+Information: 20101 - Executed DbCommand (84ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT `c`.`ColaboradorId`, `c`.`Nome`
+FROM `Colaboradores` AS `c`
+WHERE `c`.`ColaboradorId` = @__id_0
+LIMIT 1
+Information: 20101 - Executed DbCommand (3ms) [Parameters=[@p0='?' (Size = 80)], CommandType='Text', CommandTimeout='30']
+INSERT INTO `Colaboradores` (`Nome`)
+VALUES (@p0);
+SELECT `ColaboradorId`
+FROM `Colaboradores`
+WHERE ROW_COUNT() = 1 AND `ColaboradorId` = LAST_INSERT_ID();
+Information: 20101 - Executed DbCommand (7ms) [Parameters=[@p1='?' (DbType = Int32), @p0='?' (Size = 80)], CommandType='Text', CommandTimeout='30']
+SET AUTOCOMMIT = 1;
+UPDATE `Colaboradores` SET `Nome` = @p0
+WHERE `ColaboradorId` = @p1;
+SELECT ROW_COUNT();
+Information: 20101 - Executed DbCommand (1ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT `c`.`ColaboradorId`, `c`.`Nome`
+FROM `Colaboradores` AS `c`
+WHERE `c`.`ColaboradorId` = @__id_0
+LIMIT 1
+Information: 20101 - Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT `c`.`ColaboradorId`, `c`.`Nome`
+FROM `Colaboradores` AS `c`
+Information: 20101 - Executed DbCommand (1ms) [Parameters=[@p0='?' (Size = 80)], CommandType='Text', CommandTimeout='30']
+INSERT INTO `Colaboradores` (`Nome`)
+VALUES (@p0);
+SELECT `ColaboradorId`
+FROM `Colaboradores`
+WHERE ROW_COUNT() = 1 AND `ColaboradorId` = LAST_INSERT_ID();
+Information: 20101 - Executed DbCommand (0ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT `c`.`ColaboradorId`, `c`.`Nome`
+FROM `Colaboradores` AS `c`
+WHERE `c`.`ColaboradorId` = @__id_0
+LIMIT 1
+Information: 20101 - Executed DbCommand (5ms) [Parameters=[@p0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SET AUTOCOMMIT = 1;
+DELETE FROM `Colaboradores`
+WHERE `ColaboradorId` = @p0;
+SELECT ROW_COUNT();
+Information: 20101 - Executed DbCommand (0ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT `c`.`ColaboradorId`, `c`.`Nome`
+FROM `Colaboradores` AS `c`
+WHERE `c`.`ColaboradorId` = @__id_0
+LIMIT 1
+Warning: 0 - Colaborador com ID 30 não encontrado.
+Information: 20101 - Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT `p`.`ProdutoId`, `p`.`Descricao`, `p`.`EstoqueMinimo`, `p`.`SaldoAtual`
+FROM `Produtos` AS `p`
+Information: 20101 - Executed DbCommand (0ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT `p`.`ProdutoId`, `p`.`Descricao`, `p`.`EstoqueMinimo`, `p`.`SaldoAtual`
+FROM `Produtos` AS `p`
+WHERE `p`.`ProdutoId` = @__id_0
+LIMIT 1
+Information: 20101 - Executed DbCommand (5ms) [Parameters=[@p3='?' (DbType = Int32), @p0='?' (Size = 300), @p1='?' (DbType = Int32), @p2='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SET AUTOCOMMIT = 1;
+UPDATE `Produtos` SET `Descricao` = @p0, `EstoqueMinimo` = @p1, `SaldoAtual` = @p2
+WHERE `ProdutoId` = @p3;
+SELECT ROW_COUNT();
+Information: 20101 - Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT `p`.`ProdutoId`, `p`.`Descricao`, `p`.`EstoqueMinimo`, `p`.`SaldoAtual`
+FROM `Produtos` AS `p`
+Information: 20101 - Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT `p`.`ProdutoId`, `p`.`Descricao`, `p`.`EstoqueMinimo`, `p`.`SaldoAtual`
+FROM `Produtos` AS `p`
+Information: 20101 - Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT `p`.`ProdutoId`, `p`.`Descricao`, `p`.`EstoqueMinimo`, `p`.`SaldoAtual`
+FROM `Produtos` AS `p`
+Information: 20101 - Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT `p`.`ProdutoId`, `p`.`Descricao`, `p`.`EstoqueMinimo`, `p`.`SaldoAtual`
+FROM `Produtos` AS `p`
+Information: 20101 - Executed DbCommand (0ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT `p`.`ProdutoId`, `p`.`Descricao`, `p`.`EstoqueMinimo`, `p`.`SaldoAtual`
+FROM `Produtos` AS `p`
+WHERE `p`.`ProdutoId` = @__id_0
+LIMIT 1
+Warning: 0 - Dados do produto inválidos.
+Information: 20101 - Executed DbCommand (0ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT `p`.`ProdutoId`, `p`.`Descricao`, `p`.`EstoqueMinimo`, `p`.`SaldoAtual`
+FROM `Produtos` AS `p`
+WHERE `p`.`ProdutoId` = @__id_0
+LIMIT 1
