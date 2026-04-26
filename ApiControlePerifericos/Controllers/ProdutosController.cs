@@ -1,7 +1,9 @@
 ﻿
 
+using ApiControlePerifericos.DTOs;
 using ApiControlePerifericos.Interfaces;
 using ApiControlePerifericos.Models;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApiControlePerifericos.Controllers
@@ -11,61 +13,76 @@ namespace ApiControlePerifericos.Controllers
     public class ProdutosController: ControllerBase
     {
         private readonly IUnityOfWork _uof;
-        private readonly ILogger<ColaboradoresController> _logger;
+        private readonly ILogger<ProdutosController> _logger;
+        private readonly IMapper _mapper;
 
-        public ProdutosController(IUnityOfWork uof, ILogger<ColaboradoresController> logger)
+
+        public ProdutosController(IUnityOfWork uof, ILogger<ProdutosController> logger, IMapper mapper)
         {
             _uof = uof;
             _logger = logger;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public ActionResult<IEnumerable<ProdutoDTO>> Get()
         {
             var produtos = _uof.ProdutoRepository.GetAll();
-            return Ok(produtos);
+            if (produtos == null || !produtos.Any())
+            {
+                _logger.LogInformation("Nenhum produto encontrado.");
+                return NotFound("Nenhum produto encontrado.");
+            }
+            var produtosDTO = _mapper.Map<IEnumerable<ProdutoDTO>>(produtos);
+            return Ok(produtosDTO);
         }
 
         [HttpGet("{id}", Name = "ObterProduto")]
-        public IActionResult Get(int id)
+        public ActionResult<ProdutoDTO> Get(int id)
         {
             var produto = _uof.ProdutoRepository.Get(p => p.ProdutoId == id);
             if (produto == null)
             {
-                _logger.LogWarning($"Dados do produto inválidos.");
-                return BadRequest("Dados do produto inválidos.");
+                _logger.LogWarning($"Produto com ID {id} não encontrado.");
+                return NotFound($"Produto com ID {id} não encontrado.");
             }
-            return Ok(produto);
+            var produtoDTO = _mapper.Map<ProdutoDTO>(produto);
+            return Ok(produtoDTO);
         }
 
         [HttpPost]
-        public IActionResult Post(Produto produto)
+        public ActionResult<ProdutoDTO> Post(ProdutoDTO produtoDto)
         {
-            if (produto == null)
+            if (produtoDto is null)
             {
                 _logger.LogWarning($"Dados do produto inválidos.");
                 return BadRequest("Dados do produto inválidos.");
             }
+            var produto = _mapper.Map<Produto>(produtoDto);
             _uof.ProdutoRepository.Create(produto);
             _uof.Commit();
-            return CreatedAtRoute("ObterProduto", new { id = produto.ProdutoId }, produto);
+
+            var novoprodutoDto = _mapper.Map<ProdutoDTO>(produto);
+            return CreatedAtRoute("ObterProduto", new { id = novoprodutoDto.ProdutoId }, novoprodutoDto);
         }
 
         [HttpPut("{id:int}")]
-        public IActionResult Put(int id, Produto produto)
+        public ActionResult<ProdutoDTO> Put(int id, ProdutoDTO produtoDto)
         {
-            if (produto is null || produto.ProdutoId != id)
+            if (produtoDto is null || produtoDto.ProdutoId != id)
             {
                 _logger.LogWarning($"Dados do produto inválidos ou produto não encontrado.");
                 return BadRequest("Dados do produto inválidos ou produto não encontrado.");
             }
+            var produto = _mapper.Map<Produto>(produtoDto);
             _uof.ProdutoRepository.Update(produto);
             _uof.Commit();
-            return Ok(produto);
+            var produtoAtualizadoDto = _mapper.Map<ProdutoDTO>(produto);
+            return Ok(produtoAtualizadoDto);
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public ActionResult<ProdutoDTO> Delete(int id)
         {
             var produto = _uof.ProdutoRepository.Get(p => p.ProdutoId == id);
             if (produto is null)
@@ -76,7 +93,9 @@ namespace ApiControlePerifericos.Controllers
 
             var produtoExcluido = _uof.ProdutoRepository.Delete(produto);
             _uof.Commit();
-            return Ok(produtoExcluido);
+
+            var produtoExcluidoDto = _mapper.Map<ProdutoDTO>(produtoExcluido);
+            return Ok(produtoExcluidoDto);
         }
     }
 }

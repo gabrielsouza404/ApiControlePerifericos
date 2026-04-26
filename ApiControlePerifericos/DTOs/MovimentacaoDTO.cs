@@ -1,12 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ApiControlePerifericos.Models
+namespace ApiControlePerifericos.DTOs
 {
-    [Table("Movimentacoes")]
-    public class Movimentacao
+    public class MovimentacaoDTO
     {
-        [Key]
         public int MovimentacaoId { get; set; }
 
         [Required]
@@ -15,8 +12,5 @@ namespace ApiControlePerifericos.Models
         public DateTime? DataMovimentacao { get; set; }
         public int ProdutoId { get; set; }
         public int ColaboradorId { get; set; }
-
-        public Produto? Produto { get; set; }
-        public Colaborador? Colaborador { get; set; }
     }
 }

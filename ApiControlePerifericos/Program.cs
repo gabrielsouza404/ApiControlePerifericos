@@ -1,9 +1,11 @@
 using ApiControlePerifericos.Context;
+using ApiControlePerifericos.DTOs.Mappings;
 using ApiControlePerifericos.Filters;
 using ApiControlePerifericos.Interfaces;
 using ApiControlePerifericos.Logging;
 using ApiControlePerifericos.Repositories;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 using Scalar.AspNetCore;
 using System.Text.Json.Serialization;
 
@@ -38,6 +40,11 @@ builder.Logging.AddProvider(new CustomLoggerProvider(new CustomLoggerProviderCon
 {
     LogLevel = LogLevel.Information
 }));
+
+builder.Services.AddAutoMapper(config =>
+{
+    config.AddProfile<MappingProfile>();
+});
 
 var app = builder.Build();
 

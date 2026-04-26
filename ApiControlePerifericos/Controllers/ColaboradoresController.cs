@@ -1,6 +1,8 @@
 ﻿
+using ApiControlePerifericos.DTOs;
 using ApiControlePerifericos.Interfaces;
 using ApiControlePerifericos.Models;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApiControlePerifericos.Controllers
@@ -11,62 +13,78 @@ namespace ApiControlePerifericos.Controllers
     {
         private readonly IUnityOfWork _uof;
         private readonly ILogger<ColaboradoresController> _logger;
+        private readonly IMapper _mapper;
 
-        public ColaboradoresController(IUnityOfWork uof, ILogger<ColaboradoresController> logger)
+        public ColaboradoresController(IUnityOfWork uof, ILogger<ColaboradoresController> logger, IMapper mapper)
         {
             _uof = uof;
             _logger = logger;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public ActionResult<IEnumerable<ColaboradorDTO>> Get()
         {
             var colaboradores = _uof.ColaboradorRepository.GetAll();
-            return Ok(colaboradores);
+            if (colaboradores is null)
+            {
+                _logger.LogWarning("Nenhum colaborador encontrado.");
+                return NotFound("Nenhum colaborador encontrado.");
+            }
+            var colaboradoresDTO = _mapper.Map<IEnumerable<ColaboradorDTO>>(colaboradores);
+            return Ok(colaboradoresDTO);
         }
 
         [HttpGet("{id}", Name = "ObterColaborador")]
-        public IActionResult Get(int id)
+        public ActionResult<ColaboradorDTO> Get(int id)
         {
             var colaborador = _uof.ColaboradorRepository.Get(c => c.ColaboradorId == id);
-            if (colaborador == null)
+            if (colaborador is null)
             {
                 _logger.LogWarning($"Colaborador com ID {id} não encontrado.");
                 return NotFound($"Colaborador com ID {id} não encontrado.");
             }
-            return Ok(colaborador);
+            var colaboradorDTO = _mapper.Map<ColaboradorDTO>(colaborador);
+            return Ok(colaboradorDTO);
         }
 
         [HttpPost]
-        public IActionResult Post(Colaborador colaborador)
+        public ActionResult<ColaboradorDTO> Post(ColaboradorDTO colaboradorDto)
         {
-            if (colaborador == null)
+            if (colaboradorDto is null)
             {
                 _logger.LogWarning($"Dados do colaborador inválidos.");
                 return BadRequest("Dados do colaborador inválidos.");
             }
-            _uof.ColaboradorRepository.Create(colaborador);
+            var colaborador = _mapper.Map<Colaborador>(colaboradorDto);
+            var novoColaborador = _uof.ColaboradorRepository.Create(colaborador);
             _uof.Commit();
-            return CreatedAtRoute("ObterColaborador", new { id = colaborador.ColaboradorId }, colaborador);
+
+            var novoColaboradorDTO = _mapper.Map<ColaboradorDTO>(novoColaborador);
+            return new CreatedAtRouteResult("ObterColaborador", 
+                new { id = novoColaboradorDTO.ColaboradorId }, novoColaboradorDTO);
         }
 
         [HttpPut("{id:int}")]
-        public IActionResult Put(int id, Colaborador colaborador)
+        public ActionResult<ColaboradorDTO> Put(int id, ColaboradorDTO colaboradorDto)
         {
-            if (colaborador is null || id != colaborador.ColaboradorId)
+            if (colaboradorDto is null || id != colaboradorDto.ColaboradorId)
             {
                 _logger.LogWarning($"Dados do colaborador inválidos ou colaborador não encontrado.");
                 return BadRequest("Dados do colaborador inválidos ou colaborador não encontrado.");
             }
 
-            _uof.ColaboradorRepository.Update(colaborador);
+            var colaborador = _mapper.Map<Colaborador>(colaboradorDto);
+            var colabotadorAtualizado = _uof.ColaboradorRepository.Update(colaborador);     
+
             _uof.Commit();
-            return Ok(colaborador);
+            var colaboradorAtualizadoDTO = _mapper.Map<ColaboradorDTO>(colabotadorAtualizado);
+            return Ok(colaboradorAtualizadoDTO);
         }
 
         [HttpDelete("{id:int}")]
 
-        public IActionResult Delete(int id)
+        public ActionResult<ColaboradorDTO> Delete(int id)
         {
             var colaborador = _uof.ColaboradorRepository.Get(c => c.ColaboradorId == id);
             if (colaborador is null)
@@ -77,7 +95,9 @@ namespace ApiControlePerifericos.Controllers
 
             var colaboradorExcluido = _uof.ColaboradorRepository.Delete(colaborador);
             _uof.Commit();
-            return Ok(colaboradorExcluido);
+
+            var colaboradorExcluidoDTO = _mapper.Map<ColaboradorDTO>(colaboradorExcluido);
+            return Ok(colaboradorExcluidoDTO);
         }
     }
 }
