@@ -15,7 +15,7 @@ namespace ApiControlePerifericos.Logging
         }
         public ILogger CreateLogger(string categoryName)
         {
-            return _loggers.GetOrAdd(categoryName, name => new CustomerLogger(name, _loggerConfig));
+            return _loggers.GetOrAdd(categoryName, name => new CustomerLogger(_loggerConfig));
         }
         public void Dispose()
         {

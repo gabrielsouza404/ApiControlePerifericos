@@ -2,12 +2,10 @@
 {
     public class CustomerLogger : ILogger
     {
-        readonly string loggerName;
         private readonly CustomLoggerProviderConfiguration _loggerConfig;
 
-        public CustomerLogger(string name, CustomLoggerProviderConfiguration config)
+        public CustomerLogger(CustomLoggerProviderConfiguration config)
         {
-            loggerName = name;
             _loggerConfig = config;
         }
 
