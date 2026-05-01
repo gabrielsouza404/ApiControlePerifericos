@@ -27,21 +27,13 @@
             EscreverTextoNoArquivo(mensagem);
         }
 
-        private void EscreverTextoNoArquivo(string mensagem)
+        private static void EscreverTextoNoArquivo(string mensagem)
         {
-            string caminhoArquivoLog = @"C:\Projetos\ControleHardwaresCoworking\WebApi\ApiControlePerifericos\Log.txt";
-            using (StreamWriter streamWriter = new StreamWriter(caminhoArquivoLog, true))
-            {
-                try
-                {
-                    streamWriter.WriteLine(mensagem);
-                    streamWriter.Close();
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-            }
+            const string caminhoArquivoLog = @"C:\Projetos\ControleHardwaresCoworking\WebApi\ApiControlePerifericos\Log.txt";
+
+            using StreamWriter streamWriter = new(caminhoArquivoLog, true);
+            streamWriter.WriteLine(mensagem);
+            streamWriter.Close();
         }
     }
 
