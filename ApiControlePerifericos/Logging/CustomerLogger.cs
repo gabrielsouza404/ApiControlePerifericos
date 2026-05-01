@@ -36,7 +36,6 @@
 
             using StreamWriter streamWriter = new(caminhoArquivoLog, true);
             streamWriter.WriteLine(mensagem);
-            streamWriter.Close();
         }
     }
 
