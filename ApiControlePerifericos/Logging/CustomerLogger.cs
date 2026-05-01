@@ -3,12 +3,12 @@
     public class CustomerLogger : ILogger
     {
         readonly string loggerName;
-        readonly CustomLoggerProviderConfiguration loggerConfig;
+        private readonly CustomLoggerProviderConfiguration _loggerConfig;
 
         public CustomerLogger(string name, CustomLoggerProviderConfiguration config)
         {
             loggerName = name;
-            loggerConfig = config;
+            _loggerConfig = config;
         }
 
         public IDisposable BeginScope<TState>(TState state)
@@ -18,7 +18,7 @@
 
         public bool IsEnabled(LogLevel logLevel)
         {
-            return logLevel == loggerConfig.LogLevel;
+            return logLevel == _loggerConfig.LogLevel;
         }
 
         public void Log<TState>(LogLevel logLevel, EventId eventId, TState state,

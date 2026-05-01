@@ -4,22 +4,22 @@ namespace ApiControlePerifericos.Logging
 {
     public class CustomLoggerProvider : ILoggerProvider
     {
-        readonly CustomLoggerProviderConfiguration loggerConfig;
+        private readonly CustomLoggerProviderConfiguration _loggerConfig;
 
-        readonly ConcurrentDictionary<string, CustomerLogger> loggers =
+        private readonly ConcurrentDictionary<string, CustomerLogger> _loggers =
                    new ConcurrentDictionary<string, CustomerLogger>();
 
         public CustomLoggerProvider(CustomLoggerProviderConfiguration config)
         {
-            loggerConfig = config;
+            _loggerConfig = config;
         }
         public ILogger CreateLogger(string categoryName)
         {
-            return loggers.GetOrAdd(categoryName, name => new CustomerLogger(name, loggerConfig));
+            return _loggers.GetOrAdd(categoryName, name => new CustomerLogger(name, _loggerConfig));
         }
         public void Dispose()
         {
-            loggers.Clear();
+            _loggers.Clear();
         }
     }
 }
