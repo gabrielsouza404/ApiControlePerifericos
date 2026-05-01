@@ -6,8 +6,7 @@ namespace ApiControlePerifericos.Logging
     {
         private readonly CustomLoggerProviderConfiguration _loggerConfig;
 
-        private readonly ConcurrentDictionary<string, CustomerLogger> _loggers =
-                   new ConcurrentDictionary<string, CustomerLogger>();
+        private readonly ConcurrentDictionary<string, CustomerLogger> _loggers = new();
 
         public CustomLoggerProvider(CustomLoggerProviderConfiguration config)
         {
