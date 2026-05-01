@@ -5,7 +5,6 @@ using ApiControlePerifericos.Interfaces;
 using ApiControlePerifericos.Logging;
 using ApiControlePerifericos.Repositories;
 using Microsoft.EntityFrameworkCore;
-using AutoMapper;
 using Scalar.AspNetCore;
 using System.Text.Json.Serialization;
 
@@ -14,7 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers(options =>
 {
-    options.Filters.Add(typeof(ApiExceptionFilter));
+    options.Filters.Add<ApiExceptionFilter>();
 })
 .AddJsonOptions(options =>
 {
