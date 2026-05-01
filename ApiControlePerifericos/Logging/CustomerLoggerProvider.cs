@@ -12,10 +12,12 @@ namespace ApiControlePerifericos.Logging
         {
             _loggerConfig = config;
         }
+
         public ILogger CreateLogger(string categoryName)
         {
             return _loggers.GetOrAdd(categoryName, name => new CustomerLogger(_loggerConfig));
         }
+
         public void Dispose()
         {
             _loggers.Clear();
