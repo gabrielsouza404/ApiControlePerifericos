@@ -22,7 +22,7 @@
         public void Log<TState>(LogLevel logLevel, EventId eventId, TState state,
                 Exception exception, Func<TState, Exception, string> formatter)
         {
-            string mensagem = $"{logLevel.ToString()}: {eventId.Id} - {formatter(state, exception)}";
+            string mensagem = $"{logLevel}: {eventId.Id} - {formatter(state, exception)}";
 
             EscreverTextoNoArquivo(mensagem);
         }
