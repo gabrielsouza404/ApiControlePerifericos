@@ -15,9 +15,9 @@ namespace ApiControlePerifericos.Models
         public int Quantidade { get; set; }
 
         public DateTime? DataMovimentacao { get; set; }
+
         public int ProdutoId { get; set; }
         public int ColaboradorId { get; set; }
-
         public Produto? Produto { get; set; }
         public Colaborador? Colaborador { get; set; }
     }
